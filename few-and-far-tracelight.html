@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Few&Far — for hires that matter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --forest: #1B3A2B;
+    --forest-2: #2A5240;
+    --sage: #6B8F7C;
+    --ink: #17201B;
+    --muted: #5E6862;
+    --line: #E3E7E2;
+    --orange: #E8542F;
+    --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .5 0 0 0 0 .5 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  html,body{margin:0;padding:0;background:#fff;color:var(--ink);}
+  body{ font-family:'Inter',-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; -webkit-font-smoothing:antialiased; }
+  .tight{ font-family:'Inter Tight','Inter',sans-serif; }
+  section{ scroll-margin-top:20px; }
+
+  /* HERO */
+  .hero{ display:grid; grid-template-columns:46fr 54fr; min-height:max(720px,100vh); }
+  .hero-left{ display:flex; flex-direction:column; padding:0 3.2vw 7vh; }
+  .topbar-left{ display:flex; align-items:center; gap:38px; padding:26px 0; flex-wrap:wrap; }
+  .brand{ display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--forest); }
+  .brand .amp{
+    width:30px; height:30px; border-radius:8px; background:var(--forest); color:#fff;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Inter Tight',sans-serif; font-weight:600; font-size:20px; line-height:1;
+  }
+  .brand .name{ font-family:'Inter Tight',sans-serif; font-weight:300; font-size:30px; letter-spacing:-0.03em; }
+  .navlinks{ display:flex; gap:26px; font-size:17px; }
+  .navlinks a{ color:var(--ink); text-decoration:none; }
+  .hero-copy{ margin-top:auto; margin-bottom:auto; padding-top:7vh; }
+  .hero-copy h1{
+    font-family:'Inter Tight',sans-serif; font-weight:300;
+    font-size:clamp(50px,6.6vw,104px); line-height:0.98; letter-spacing:-0.045em; margin:0 0 30px;
+  }
+  .hero-copy p{ font-size:clamp(17px,1.6vw,22px); line-height:1.5; color:var(--muted); max-width:34ch; margin:0 0 34px; }
+  .btn-row{ display:flex; gap:12px; flex-wrap:wrap; }
+  .btn-dark{
+    background:var(--forest); color:#fff; font-size:19px; font-weight:500; padding:20px 34px; border-radius:14px;
+    text-decoration:none; box-shadow:inset 0 0 0 1px rgba(255,255,255,0.12), 0 1px 0 rgba(0,0,0,0.2);
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .btn-dark:hover{ transform:translateY(-2px); box-shadow:0 12px 24px rgba(27,58,43,0.28); }
+  .btn-grey{
+    background:#F0F1EF; color:var(--ink); font-size:19px; font-weight:500; padding:20px 34px; border-radius:14px;
+    text-decoration:none; border:1px solid var(--line); transition:transform .15s ease;
+  }
+  .btn-grey:hover{ transform:translateY(-2px); }
+
+  .hero-right{
+    position:relative; overflow:hidden; color:#fff;
+    background:
+      radial-gradient(circle at 78% 18%, rgba(160,190,172,0.55) 0%, rgba(160,190,172,0) 46%),
+      radial-gradient(circle at 20% 80%, rgba(70,104,86,0.7) 0%, rgba(70,104,86,0) 50%),
+      linear-gradient(140deg, #5F8270 0%, #6E927F 48%, #5A7C69 100%);
+  }
+  .hero-right::before{ content:""; position:absolute; inset:0; background-image:var(--grain); mix-blend-mode:overlay; opacity:0.55; pointer-events:none; z-index:1; }
+  .topbar-right{ position:relative; z-index:5; display:flex; justify-content:flex-end; align-items:center; gap:28px; padding:26px 3vw; }
+  .topbar-right a.rev{ color:#fff; text-decoration:none; font-size:17px; }
+  .topbar-right a.book{ background:#fff; color:var(--ink); text-decoration:none; font-size:17px; font-weight:500; padding:14px 22px; border-radius:12px; }
+
+  .panel-head{ position:relative; z-index:5; display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; padding:0 3vw; }
+  .chip{
+    font-size:13.5px; font-weight:500; padding:9px 16px; border-radius:30px;
+    background:rgba(255,255,255,0.22); border:1px solid rgba(255,255,255,0.35);
+    -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); color:#fff;
+  }
+  .chip b{ font-weight:600; }
+  .chip.hint{ background:#fff; color:var(--forest); font-weight:600; }
+
+  .stage{ position:relative; z-index:3; height:clamp(470px,60vh,540px); margin:10px 3vw 0; }
+  .agent{
+    position:absolute; width:clamp(240px,40%,300px);
+    display:flex; align-items:center; gap:14px; text-align:left;
+    background:#fff; color:var(--ink); border:0; border-radius:18px; padding:12px 18px 12px 12px;
+    box-shadow:0 14px 30px rgba(20,40,30,0.18);
+    cursor:pointer; font-family:inherit;
+    animation:float 5s ease-in-out infinite;
+    transition:box-shadow .2s ease;
+  }
+  .agent::after{
+    content:""; position:absolute; left:16px; right:16px; bottom:-9px; height:12px;
+    background:rgba(255,255,255,0.65); border-radius:0 0 14px 14px; z-index:-1;
+  }
+  .agent:hover{ box-shadow:0 0 0 3px rgba(255,255,255,0.7), 0 18px 36px rgba(20,40,30,0.28); }
+  @keyframes float{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-7px); } }
+  .agent .ico{
+    width:50px; height:50px; border-radius:12px; background:#EEF1ED; color:var(--forest);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Inter Tight',sans-serif; font-weight:600; font-size:23px; flex-shrink:0;
+  }
+  .agent .meta{ flex:1; min-width:0; }
+  .agent .meta b{ display:block; font-size:17px; font-weight:500; color:var(--ink); }
+  .agent .meta small{ display:block; font-size:14px; color:#7A857E; margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .spin{
+    width:22px; height:22px; border-radius:50%; flex-shrink:0;
+    border:2.5px solid #DADFD9; border-top-color:#3A4A40; animation:spin .9s linear infinite;
+  }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+  .agent.done .spin{ animation:none; border:0; background:var(--forest); position:relative; }
+  .agent.done .spin::after{
+    content:""; position:absolute; left:7px; top:4px; width:6px; height:11px;
+    border:solid #fff; border-width:0 2.5px 2.5px 0; transform:rotate(45deg);
+  }
+  .agent.live .spin{ animation:none; border:0; background:var(--orange); animation:blinkdot 1.1s ease-in-out infinite; }
+  @keyframes blinkdot{ 0%,100%{ opacity:1; } 50%{ opacity:0.35; } }
+  .agent.done .meta small, .agent.live .meta small{ color:var(--forest); font-weight:500; }
+  .cue{
+    position:absolute; top:-16px; right:14px; background:var(--orange); color:#fff;
+    font-size:12px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase;
+    padding:5px 12px; border-radius:20px; animation:bob 0.9s ease-in-out infinite; pointer-events:none;
+  }
+  @keyframes bob{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-5px); } }
+  .centertile{
+    position:absolute; left:34%; top:38%; width:clamp(96px,16%,130px); aspect-ratio:1;
+    border-radius:22px; background:rgba(255,255,255,0.35); border:1px solid rgba(255,255,255,0.55);
+    -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 12px 30px rgba(20,40,30,0.15);
+  }
+  .centertile span{ font-family:'Inter Tight',sans-serif; font-weight:600; font-size:clamp(46px,6vw,76px); color:var(--forest); line-height:1; }
+
+  .reveal{
+    position:relative; z-index:5; margin:18px 3vw 3vh; background:rgba(255,255,255,0.95);
+    color:var(--ink); border-radius:22px; padding:22px 28px; min-height:128px;
+    box-shadow:0 18px 40px rgba(20,40,30,0.2);
+  }
+  .reveal .tag{
+    display:inline-block; font-size:11px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase;
+    background:#E7ECE8; color:var(--forest); padding:5px 12px; border-radius:20px; margin-bottom:10px;
+  }
+  .reveal .tag.ok{ background:var(--forest); color:#fff; }
+  .reveal .tag.live{ background:var(--orange); color:#fff; }
+  .reveal .label{ font-family:'Inter Tight',sans-serif; font-weight:400; font-size:clamp(24px,2.6vw,34px); letter-spacing:-0.03em; margin-bottom:4px; }
+  .reveal .text{ font-size:16px; line-height:1.5; color:#4B5750; }
+  .reveal .text a{ color:var(--forest); font-weight:600; }
+
+  /* LOGOS */
+  .logos{ padding:90px 5vw 30px; text-align:center; }
+  .stat-line{ font-size:15px; color:var(--muted); margin-bottom:34px; }
+  .stat-line b{ color:var(--ink); font-weight:600; }
+  .logo-row{ display:flex; justify-content:center; gap:clamp(24px,5vw,70px); flex-wrap:wrap; }
+  .logo-row span{ font-family:'Inter Tight',sans-serif; font-size:clamp(20px,2.3vw,30px); font-weight:500; color:#8E9690; letter-spacing:-0.02em; }
+
+  /* PLANNER */
+  .planner{ padding:110px 3vw 40px; }
+  .planner-head{ text-align:center; margin-bottom:46px; }
+  .planner-head h2{ font-family:'Inter Tight',sans-serif; font-weight:300; font-size:clamp(38px,5vw,72px); letter-spacing:-0.04em; line-height:1.02; margin:0 0 18px; }
+  .planner-head p{ font-size:clamp(16px,1.5vw,20px); color:var(--muted); margin:0; }
+  .frame{
+    position:relative; overflow:hidden; border-radius:26px; padding:clamp(24px,4vw,56px);
+    display:grid; grid-template-columns:300px 1fr; gap:40px; align-items:end;
+    background:
+      radial-gradient(circle at 80% 15%, rgba(160,190,172,0.5) 0%, rgba(160,190,172,0) 45%),
+      linear-gradient(140deg, #5F8270 0%, #6E927F 55%, #5A7C69 100%);
+    color:#fff;
+  }
+  .frame::before{ content:""; position:absolute; inset:0; background-image:var(--grain); mix-blend-mode:overlay; opacity:0.5; pointer-events:none; }
+  .frame > *{ position:relative; }
+  .frame-left h3{ font-family:'Inter Tight',sans-serif; font-weight:300; font-size:clamp(30px,3.4vw,46px); letter-spacing:-0.035em; line-height:1.05; margin:0 0 16px; }
+  .frame-left p{ font-size:17px; line-height:1.5; margin:0; color:rgba(255,255,255,0.9); }
+  .frame-left .go{ display:inline-block; margin-top:20px; font-size:13.5px; font-weight:600; background:#fff; color:var(--forest); padding:8px 16px; border-radius:30px; }
+
+  .appwin{ background:#fff; color:var(--ink); border-radius:16px; box-shadow:0 24px 60px rgba(15,35,25,0.28); overflow:hidden; }
+  .apptab{ display:flex; align-items:center; gap:8px; font-size:13px; padding:10px 16px; background:#F4F5F3; border-bottom:1px solid var(--line); }
+  .apptab i{ width:10px; height:10px; border-radius:3px; background:var(--forest-2); display:inline-block; }
+  .appbody{ padding:16px; }
+  .appbanner{ background:var(--forest-2); color:#fff; border-radius:8px; padding:16px 20px; margin-bottom:14px; }
+  .appbanner b{ display:block; font-size:19px; font-weight:600; letter-spacing:-0.01em; }
+  .appbanner span{ font-size:13px; opacity:0.9; }
+  .appgrid{ display:grid; grid-template-columns:260px 1fr; gap:14px; }
+  .assump{ border:1px solid var(--line); border-radius:8px; padding:16px; }
+  .assump h4{ margin:0 0 14px; font-size:11px; letter-spacing:0.1em; color:#7A857E; font-weight:600; }
+  .field{ margin-bottom:18px; }
+  .field label{ display:flex; justify-content:space-between; font-size:13.5px; margin-bottom:8px; }
+  .field label b{ font-weight:600; border-bottom:1px dotted #9AA39D; }
+  input[type=range]{
+    -webkit-appearance:none; appearance:none; width:100%; height:5px; border-radius:4px; outline:none;
+    background:linear-gradient(90deg, var(--forest-2) var(--p,50%), #E1E5E0 var(--p,50%));
+    cursor:pointer;
+  }
+  input[type=range]::-webkit-slider-thumb{ -webkit-appearance:none; width:20px; height:20px; border-radius:50%; background:var(--forest-2); border:3px solid #fff; box-shadow:0 0 0 1px var(--forest-2), 0 3px 8px rgba(0,0,0,0.25); cursor:grab; }
+  input[type=range]::-moz-range-thumb{ width:16px; height:16px; border-radius:50%; background:var(--forest-2); border:3px solid #fff; box-shadow:0 0 0 1px var(--forest-2); cursor:grab; }
+  .seg{ display:flex; border:1px solid var(--line); border-radius:8px; overflow:hidden; }
+  .seg button{ flex:1; font-family:inherit; font-size:12.5px; padding:8px 4px; border:0; background:#fff; color:var(--muted); cursor:pointer; border-right:1px solid var(--line); }
+  .seg button:last-child{ border-right:0; }
+  .seg button.on{ background:var(--forest-2); color:#fff; font-weight:600; }
+  .reset{ width:100%; margin-top:6px; font-family:inherit; font-size:13.5px; padding:10px; border:1px solid #CBD1CB; background:#fff; border-radius:6px; cursor:pointer; }
+  .reset:hover{ background:#F4F5F3; }
+
+  .out-tiles{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:10px; }
+  .tile{ border:1px solid var(--line); border-top:3px solid var(--forest-2); border-radius:6px; padding:12px 14px; }
+  .tile.dark{ background:var(--forest-2); color:#fff; border-color:var(--forest-2); }
+  .tile .k{ font-size:10.5px; letter-spacing:0.09em; font-weight:600; opacity:0.75; margin-bottom:6px; text-transform:uppercase; }
+  .tile .v{ font-family:'Inter Tight',sans-serif; font-size:clamp(20px,2.2vw,28px); font-weight:500; letter-spacing:-0.02em; line-height:1.1; }
+  .out-chart{ border:1px solid var(--line); border-radius:8px; padding:16px; }
+  .out-chart h4{ margin:0 0 12px; font-size:13.5px; font-weight:500; }
+  .dots{ display:grid; grid-template-columns:repeat(10,1fr); gap:8px; margin-bottom:10px; }
+  .dots i{ aspect-ratio:1; border-radius:50%; background:#E6EAE5; transition:background .2s ease, transform .2s ease; }
+  .dots i.on{ background:var(--forest-2); transform:scale(1.05); }
+  .support{ font-size:14px; line-height:1.55; color:#3E4A43; min-height:3.1em; }
+  .fine{ font-size:11.5px; color:#8A938D; margin-top:8px; }
+
+  /* CLOSE */
+  .go-far{ text-align:center; padding:130px 5vw 20px; }
+  .go-far h3{ font-family:'Inter Tight',sans-serif; font-weight:300; font-size:clamp(46px,7.4vw,104px); line-height:0.98; letter-spacing:-0.045em; margin:0 0 30px; }
+  .closing{ text-align:center; font-size:13.5px; color:var(--muted); padding:30px 5vw 70px; line-height:1.7; }
+
+  @media (max-width:980px){
+    .hero{ grid-template-columns:1fr; min-height:0; }
+    .hero-left{ padding-bottom:60px; }
+    .navlinks{ display:none; }
+    .stage{ height:auto; display:flex; flex-direction:column; gap:22px; padding:10px 0 6px; }
+    .agent{ position:relative; left:auto !important; top:auto !important; width:100%; }
+    .centertile{ display:none; }
+    .frame{ grid-template-columns:1fr; align-items:start; }
+    .appgrid{ grid-template-columns:1fr; }
+    .out-tiles{ grid-template-columns:1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-left">
+    <div class="topbar-left">
+      <a class="brand" href="#"><span class="amp">&amp;</span><span class="name">few&amp;far</span></a>
+      <nav class="navlinks">
+        <a href="#proof">Proof</a>
+        <a href="#planner">Planner</a>
+        <a href="https://www.google.com/search?q=few%26far+recruitment#lrd=0x487604cd9f70496b:0x26167ab33d074c75,1,,,," target="_blank" rel="noopener">Reviews</a>
+      </nav>
+    </div>
+    <div class="hero-copy">
+      <h1>For hires<br>that matter</h1>
+      <p>The recruitment partner for AI teams going far. Short, curated shortlists for the hires that matter most.</p>
+      <div class="btn-row">
+        <a class="btn-dark" href="https://calendly.com/charlie-fletcher-fewandfar/30min" target="_blank" rel="noopener">Book a call</a>
+        <a class="btn-grey" href="https://www.google.com/search?q=few%26far+recruitment#lrd=0x487604cd9f70496b:0x26167ab33d074c75,1,,,," target="_blank" rel="noopener">See the reviews</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-right" id="proof">
+    <div class="topbar-right">
+      <a class="rev" href="https://www.google.com/search?q=few%26far+recruitment#lrd=0x487604cd9f70496b:0x26167ab33d074c75,1,,,," target="_blank" rel="noopener">Reviews</a>
+      <a class="book" href="https://calendly.com/charlie-fletcher-fewandfar/30min" target="_blank" rel="noopener">Book a call</a>
+    </div>
+    <div class="panel-head">
+      <div class="chip hint">↳ click a running agent to finish it</div>
+      <div class="chip">Finished <b id="finished">0</b> / 5 &nbsp;·&nbsp; Live <b>1</b></div>
+    </div>
+    <div class="stage" id="stage">
+      <div class="centertile"><span>&amp;</span></div>
+    </div>
+    <div class="reveal" id="reveal">
+      <span class="tag">Agents running</span>
+      <div class="label">Nothing finished yet</div>
+      <div class="text">Each card is a placement, still "running". Click one to finish it and see the proof.</div>
+    </div>
+  </div>
+</section>
+
+<section class="logos">
+  <div class="stat-line">Since <b>2013</b> &nbsp;·&nbsp; <b>800+</b> teams built &nbsp;·&nbsp; <b>300+</b> five-star Google reviews</div>
+  <div class="logo-row">
+    <span>Tekton Dynamics</span><span>causalens</span><span>Overmind</span><span>Artificial Societies</span><span>Glyphic</span>
+  </div>
+</section>
+
+<section class="planner" id="planner">
+  <div class="planner-head">
+    <h2>Plan your next hire on Few&amp;Far</h2>
+    <p>Set your assumptions and see how we'd structure the search.</p>
+  </div>
+
+  <div class="frame">
+    <div class="frame-left">
+      <h3>Turn any hiring question into a plan</h3>
+      <p>Stress-test assumptions, from one-off hires to multi-hire builds.</p>
+      <span class="go">↳ drag the sliders</span>
+    </div>
+
+    <div class="appwin">
+      <div class="apptab"><i></i> Hiring plan.app.tsx</div>
+      <div class="appbody">
+        <div class="appbanner">
+          <b>Your hiring plan</b>
+          <span>Drag an assumption; the plan recalculates and every line traces back to our offering.</span>
+        </div>
+        <div class="appgrid">
+          <div class="assump">
+            <h4>ASSUMPTIONS</h4>
+            <div class="field">
+              <label>Hires needed <b id="hiresVal">4</b></label>
+              <input type="range" id="hires" min="1" max="20" value="4">
+            </div>
+            <div class="field">
+              <label>Seniority <b id="seniorVal">Senior</b></label>
+              <input type="range" id="senior" min="0" max="2" step="1" value="1">
+            </div>
+            <div class="field">
+              <label>Employment</label>
+              <div class="seg" id="emp">
+                <button data-v="perm">Permanent</button>
+                <button data-v="contract">Contract</button>
+                <button data-v="either" class="on">Either</button>
+              </div>
+            </div>
+            <button class="reset" id="reset">Reset to base case</button>
+          </div>
+
+          <div>
+            <div class="out-tiles">
+              <div class="tile dark"><div class="k">Offering</div><div class="v" id="oOffer">Growth</div></div>
+              <div class="tile dark"><div class="k">Structure</div><div class="v" id="oStruct">Team growth build</div></div>
+              <div class="tile"><div class="k">Route</div><div class="v" id="oRoute">Permanent or contract</div></div>
+            </div>
+            <div class="out-chart">
+              <h4>Team being built <span id="dotsLabel" style="color:#7A857E;font-weight:400;">4 of 20</span></h4>
+              <div class="dots" id="dots"></div>
+              <div class="support" id="support"></div>
+              <div class="fine">If a placement leaves within the first 3 months, we find a replacement, free. Terms &amp; conditions apply.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="go-far">
+  <h3>Want to go far?<br>It takes the Few.</h3>
+  <a class="btn-dark" href="https://calendly.com/charlie-fletcher-fewandfar/30min" target="_blank" rel="noopener">Book a call</a>
+</section>
+
+<div class="closing">Reply on LinkedIn if you'd like the source behind any of these, or want to talk through hiring for your team.</div>
+
+<script>
+(function(){
+  /* ===== HERO: RUNNING AGENTS ===== */
+  const signals = [
+    { icon:'G', name:'Glyphic', task:'Recommending us, unprompted', pos:[58,2], text:'A founder posted publicly, unprompted, recommending Few&Far to anyone hiring.', link:'https://www.linkedin.com/posts/dneves_if-you-are-hiring-i-cant-recommend-few-share-7437605762023063555-J-jk' },
+    { icon:'c', name:'causalens', task:'Placing three engineers', pos:[2,12], text:'Three engineers placed this year alone, all still in seat.' },
+    { icon:'A', name:'Artificial Societies', task:'Hiring across simulation roles', pos:[58,26], live:true, text:'Currently supporting hiring across pre-training, post-training, and simulation roles.' },
+    { icon:'T', name:'Tekton Dynamics', task:'Placing the founding team', pos:[58,50], text:'Placed the founding team at this YC-backed robotics company.' },
+    { icon:'O', name:'Overmind', task:'Placing the founding engineer', pos:[2,64], text:'Placed the founding engineer at this AI security company.' },
+    { icon:'★', name:'Google reviews', task:'Reading 300+ reviews', pos:[48,76], text:'Rated 5 stars.', link:'https://www.google.com/search?q=few%26far+recruitment#lrd=0x487604cd9f70496b:0x26167ab33d074c75,1,,,,' }
+  ];
+  const stage = document.getElementById('stage');
+  const reveal = document.getElementById('reveal');
+  const finishedEl = document.getElementById('finished');
+  const done = new Set();
+  let cue = null;
+
+  signals.forEach((s, i) => {
+    const b = document.createElement('button');
+    b.className = 'agent';
+    b.style.left = s.pos[0] + '%';
+    b.style.top = s.pos[1] + '%';
+    b.style.animationDelay = (i * -0.8) + 's';
+    b.innerHTML =
+      '<span class="ico">'+s.icon+'</span>' +
+      '<span class="meta"><b>'+s.name+'</b><small>'+s.task+'</small></span>' +
+      '<span class="spin"></span>';
+    if(i === 0){
+      cue = document.createElement('span');
+      cue.className = 'cue';
+      cue.textContent = 'Click';
+      b.appendChild(cue);
+    }
+    b.addEventListener('click', () => {
+      if(cue){ cue.remove(); cue = null; }
+      const small = b.querySelector('small');
+      if(s.live){
+        b.classList.add('live');
+        small.textContent = 'Search in progress';
+      } else {
+        b.classList.add('done');
+        small.textContent = 'Verified';
+        done.add(i);
+        finishedEl.textContent = done.size;
+      }
+      const linkHtml = s.link ? ' <a href="'+s.link+'" target="_blank" rel="noopener">See source →</a>' : '';
+      reveal.innerHTML =
+        '<span class="tag '+(s.live?'live':'ok')+'">'+(s.live?'Live search':'Finished and verified')+'</span>' +
+        '<div class="label">'+s.name+'</div>' +
+        '<div class="text">'+s.text+linkHtml+'</div>';
+    });
+    stage.appendChild(b);
+  });
+
+  /* ===== PLANNER APP ===== */
+  const hires = document.getElementById('hires');
+  const senior = document.getElementById('senior');
+  const emp = document.getElementById('emp');
+  const hiresVal = document.getElementById('hiresVal');
+  const seniorVal = document.getElementById('seniorVal');
+  const oOffer = document.getElementById('oOffer');
+  const oStruct = document.getElementById('oStruct');
+  const oRoute = document.getElementById('oRoute');
+  const dots = document.getElementById('dots');
+  const dotsLabel = document.getElementById('dotsLabel');
+  const support = document.getElementById('support');
+  let empVal = 'either';
+
+  for(let i=0;i<20;i++){ dots.appendChild(document.createElement('i')); }
+
+  const seniorNames = ['Individual contributor','Senior','Leadership'];
+  const supportText = {
+    Leadership: 'A carefully curated shortlist, quickly, for senior hires and board appointments.',
+    Growth: 'Specialist consultants placing a carefully chosen group of professionals, permanent or contract.',
+    Scale: 'Recruiting a larger number of professionals at pace, while reducing the cost per hire.'
+  };
+
+  function plan(h, s, e){
+    const offering = s === 2 ? 'Leadership' : (h >= 6 ? 'Scale' : 'Growth');
+    const structure = h === 1 ? 'One-off hire' : (h <= 5 ? 'Team growth build' : 'Multi-hire build');
+    const route = e === 'perm' ? 'Permanent' : (e === 'contract' ? 'Contract' : 'Permanent or contract');
+    return { offering, structure, route };
+  }
+
+  function paint(el){
+    const min = +el.min, max = +el.max;
+    el.style.setProperty('--p', ((+el.value - min)/(max - min)*100) + '%');
+  }
+
+  function render(){
+    const h = +hires.value, s = +senior.value;
+    hiresVal.textContent = h;
+    seniorVal.textContent = seniorNames[s];
+    const p = plan(h, s, empVal);
+    oOffer.textContent = p.offering;
+    oStruct.textContent = p.structure;
+    oRoute.textContent = p.route;
+    support.textContent = supportText[p.offering];
+    [...dots.children].forEach((d, i) => d.classList.toggle('on', i < h));
+    dotsLabel.textContent = h + ' of 20';
+    paint(hires); paint(senior);
+  }
+
+  hires.addEventListener('input', render);
+  senior.addEventListener('input', render);
+  emp.querySelectorAll('button').forEach(b => {
+    b.addEventListener('click', () => {
+      emp.querySelectorAll('button').forEach(x => x.classList.remove('on'));
+      b.classList.add('on');
+      empVal = b.dataset.v;
+      render();
+    });
+  });
+  document.getElementById('reset').addEventListener('click', () => {
+    hires.value = 4; senior.value = 1; empVal = 'either';
+    emp.querySelectorAll('button').forEach(x => x.classList.toggle('on', x.dataset.v === 'either'));
+    render();
+  });
+  render();
+})();
+</script>
+</body>
+</html>
